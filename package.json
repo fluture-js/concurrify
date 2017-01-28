@@ -1,0 +1,59 @@
+{
+  "name": "concurrify",
+  "version": "0.0.0",
+  "description": "Turn non-concurrent FantasyLand Applicatives concurrent",
+  "main": "index.js",
+  "repository": "https://github.com/fluture-js/concurrify.git",
+  "scripts": {
+    "clean": "rimraf npm-debug.log coverage",
+    "lint": "eslint index.js test",
+    "lint:fix": "eslint --fix index.js test",
+    "lint:readme": "remark --no-stdout --frail -u remark-validate-links README.md",
+    "release": "npm outdated --long && xyz --edit --repo git@github.com:fluture-js/concurrify.git --tag 'X.Y.Z' --increment",
+    "toc": "node scripts/toc.js",
+    "test": "npm run test:all && npm run test:coverage && codecov",
+    "test:all": "npm run lint && npm run lint:readme && npm run test:unit",
+    "test:unit": "_mocha --ui bdd --reporter list --check-leaks --full-trace test/**.test.js",
+    "test:coverage": "npm run clean && istanbul cover --report html _mocha -- --ui bdd --reporter dot --check-leaks --bail test/**.test.js"
+  },
+  "author": "Aldwin Vlasblom <aldwin.vlasblom@gmail.com> (https://github.com/Avaq)",
+  "homepage": "https://github.com/fluture-js/concurrify",
+  "bugs": {
+    "url": "https://github.com/fluture-js/concurrify/issues"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "keywords": [
+    "algebraic",
+    "async",
+    "asynchronous",
+    "browser",
+    "control-flow",
+    "fantasy-land",
+    "fp",
+    "functional",
+    "functor",
+    "concurrent",
+    "library",
+    "monad",
+    "monadic",
+    "node",
+    "parallel"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "codecov": "^1.0.1",
+    "eslint": "^3.0.1",
+    "eslint-config-warp": "^1.2.0",
+    "fantasy-land": "^3.0.0",
+    "istanbul": "^0.4.2",
+    "markdown-toc": "^1.0.2",
+    "mocha": "^3.0.2",
+    "remark-cli": "^2.1.0",
+    "remark-validate-links": "^5.0.0",
+    "rimraf": "^2.4.3",
+    "xyz": "^2.0.1"
+  }
+}
