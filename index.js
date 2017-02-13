@@ -129,13 +129,13 @@
 
     proto[$ap] = function Concurrently$ap(m){
       if(!isOuter(this)) invalidContext(OUTERTYPE + '#ap', this, OUTERTYPE);
-      if(!isOuter(m)) invalidArgument(OUTERTYPE + '#ap', 0, 'be a Concurrently', m);
+      if(!isOuter(m)) invalidArgument(OUTERTYPE + '#ap', 0, 'be a ' + OUTERTYPE, m);
       return new Concurrently(ap(this.sequential, m.sequential));
     };
 
     proto[$alt] = function Concurrently$alt(m){
       if(!isOuter(this)) invalidContext(OUTERTYPE + '#alt', this, OUTERTYPE);
-      if(!isOuter(m)) invalidArgument(OUTERTYPE + '#alt', 0, 'be a Concurrently', m);
+      if(!isOuter(m)) invalidArgument(OUTERTYPE + '#alt', 0, 'be a ' + OUTERTYPE, m);
       return new Concurrently(alt(this.sequential, m.sequential));
     };
 
