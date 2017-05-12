@@ -42,7 +42,7 @@
   ],
   "dependencies": {
     "sanctuary-type-classes": "^4.0.0",
-    "sanctuary-type-identifiers": "^1.0.0"
+    "sanctuary-type-identifiers": "^2.0.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",

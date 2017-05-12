@@ -56,20 +56,15 @@
     );
   }
 
-  function last(xs){
-    return xs[xs.length - 1];
-  }
-
-  function getReprType(Repr){
+  //       getTypeIdentifier :: TypeRepresentative -> TypeIdentifier
+  function getTypeIdentifier(Repr){
     return Repr[$$type] || Repr.name || 'Anonymous';
   }
 
-  function concurrentPrepender(x, i, xs){
-    return i === xs.length - 1 ? ('Concurrent' + x) : x;
-  }
-
-  function computeType(type){
-    return type.split('/').map(concurrentPrepender).join('/');
+  //       generateTypeIdentifier :: TypeIdentifier -> TypeIdentifier
+  function generateTypeIdentifier(identifier){
+    var o = type.parse(identifier);
+    return (o.namespace || 'concurrify') + '/Concurrent' + o.name + '@' + o.version;
   }
 
   //concurrify :: Applicative m
@@ -77,8 +72,11 @@
   //           -> Concurrently m
   return function concurrify(Repr, zero, alt, ap){
 
-    var INNERTYPE = getReprType(Repr);
-    var OUTERTYPE = computeType(INNERTYPE);
+    var INNERTYPE = getTypeIdentifier(Repr);
+    var OUTERTYPE = generateTypeIdentifier(INNERTYPE);
+
+    var INNERNAME = type.parse(INNERTYPE).name;
+    var OUTERNAME = type.parse(OUTERTYPE).name;
 
     function Concurrently(sequential){
       this.sequential = sequential;
@@ -97,12 +95,12 @@
     }
 
     function construct(x){
-      if(!isInner(x)) invalidArgument(OUTERTYPE, 0, 'be of type "' + INNERTYPE + '"', x);
+      if(!isInner(x)) invalidArgument(OUTERNAME, 0, 'be of type "' + INNERNAME + '"', x);
       return new Concurrently(x);
     }
 
     if(!isApplicativeRepr(Repr)) invalidArgument('concurrify', 0, 'represent an Applicative', Repr);
-    if(!isInner(zero)) invalidArgument('concurrify', 1, 'be of type "' + INNERTYPE + '"', zero);
+    if(!isInner(zero)) invalidArgument('concurrify', 1, 'be of type "' + INNERNAME + '"', zero);
     if(!isFunction(alt)) invalidArgument('concurrify', 2, 'be a function', alt);
     if(!isBinary(alt)) invalidArgument('concurrify', 2, 'be binary', alt);
     if(!isFunction(ap)) invalidArgument('concurrify', 3, 'be a function', ap);
@@ -122,26 +120,26 @@
     };
 
     proto[$map] = function Concurrently$map(mapper){
-      if(!isOuter(this)) invalidContext(OUTERTYPE + '#map', this, OUTERTYPE);
-      if(!isFunction(mapper)) invalidArgument(OUTERTYPE + '#map', 0, 'be a function', mapper);
+      if(!isOuter(this)) invalidContext(OUTERNAME + '#map', this, OUTERNAME);
+      if(!isFunction(mapper)) invalidArgument(OUTERNAME + '#map', 0, 'be a function', mapper);
       return new Concurrently(Z.map(mapper, this.sequential));
     };
 
     proto[$ap] = function Concurrently$ap(m){
-      if(!isOuter(this)) invalidContext(OUTERTYPE + '#ap', this, OUTERTYPE);
-      if(!isOuter(m)) invalidArgument(OUTERTYPE + '#ap', 0, 'be a ' + OUTERTYPE, m);
+      if(!isOuter(this)) invalidContext(OUTERNAME + '#ap', this, OUTERNAME);
+      if(!isOuter(m)) invalidArgument(OUTERNAME + '#ap', 0, 'be a ' + OUTERNAME, m);
       return new Concurrently(ap(this.sequential, m.sequential));
     };
 
     proto[$alt] = function Concurrently$alt(m){
-      if(!isOuter(this)) invalidContext(OUTERTYPE + '#alt', this, OUTERTYPE);
-      if(!isOuter(m)) invalidArgument(OUTERTYPE + '#alt', 0, 'be a ' + OUTERTYPE, m);
+      if(!isOuter(this)) invalidContext(OUTERNAME + '#alt', this, OUTERNAME);
+      if(!isOuter(m)) invalidArgument(OUTERNAME + '#alt', 0, 'be a ' + OUTERNAME, m);
       return new Concurrently(alt(this.sequential, m.sequential));
     };
 
     proto.toString = function Concurrently$toString(){
-      if(!isOuter(this)) invalidContext(OUTERTYPE + '#toString', this, OUTERTYPE);
-      return last(OUTERTYPE.split('/')) + '(' + Z.toString(this.sequential) + ')';
+      if(!isOuter(this)) invalidContext(OUTERNAME + '#toString', this, OUTERNAME);
+      return OUTERNAME + '(' + Z.toString(this.sequential) + ')';
     };
 
     return construct;
