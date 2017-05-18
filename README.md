@@ -1,5 +1,7 @@
 # Concurrify
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/fluture-js/concurrify.svg)](https://greenkeeper.io/)
+
 [![Chat](https://badges.gitter.im/fluture-js/concurrify.svg)](https://gitter.im/fluture-js/fluture)
 [![NPM Version](https://badge.fury.io/js/concurrify.svg)](https://www.npmjs.com/package/concurrify)
 [![Dependencies](https://david-dm.org/fluture-js/concurrify.svg)](https://david-dm.org/fluture-js/concurrify)
