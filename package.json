@@ -5,14 +5,12 @@
   "main": "index.js",
   "repository": "https://github.com/fluture-js/concurrify.git",
   "scripts": {
-    "clean": "rimraf npm-debug.log coverage",
+    "clean": "rimraf npm-debug.log .nyc_output coverage.lcov",
     "lint": "eslint index.js test",
-    "lint:fix": "npm run lint -- --fix",
     "release": "npm outdated --long && xyz --edit --repo git@github.com:fluture-js/concurrify.git --tag 'X.Y.Z' --increment",
-    "test": "npm run test:all && npm run test:coverage && codecov",
-    "test:all": "npm run lint && npm run test:unit",
-    "test:unit": "_mocha --ui bdd --reporter list --check-leaks --full-trace test/**.test.js",
-    "test:coverage": "npm run clean && istanbul cover --report html _mocha -- --ui bdd --reporter dot --check-leaks --bail test/**.test.js"
+    "test": "npm run lint && npm run test:unit",
+    "test:unit": "nyc mocha --ui bdd --reporter list --check-leaks --full-trace test/**.test.js",
+    "test:coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
   },
   "author": "Aldwin Vlasblom <aldwin.vlasblom@gmail.com> (https://github.com/Avaq)",
   "homepage": "https://github.com/fluture-js/concurrify",
@@ -41,7 +39,7 @@
     "parallel"
   ],
   "dependencies": {
-    "sanctuary-type-classes": "^5.1.0",
+    "sanctuary-type-classes": "^6.0.0",
     "sanctuary-type-identifiers": "^2.0.0"
   },
   "devDependencies": {
@@ -50,8 +48,8 @@
     "eslint": "^3.0.1",
     "eslint-config-warp": "^1.2.0",
     "fantasy-land": "^3.0.0",
-    "istanbul": "^0.4.2",
     "mocha": "^3.0.2",
+    "nyc": "^11.0.2",
     "rimraf": "^2.4.3",
     "xyz": "^2.0.1"
   }
