@@ -5,9 +5,7 @@ var expect = require('chai').expect;
 var Z = require('sanctuary-type-classes');
 var type = require('sanctuary-type-identifiers');
 var FL = require('fantasy-land');
-
 var $$type = '@@type';
-
 var Identity = function(x){
   var id = {x: x, constructor: Identity};
   id[FL.ap] = function(mf){ return Identity(mf.x(x)) };
@@ -21,6 +19,7 @@ Identity[$$type] = 'my/Identity@1';
 var mockZero = Identity('zero');
 
 function mockAlt(a, b){ return b }
+
 function mockAp(mx, mf){ return mx[FL.ap](mf) }
 
 describe('concurrify', function(){
@@ -141,11 +140,13 @@ describe('concurrify', function(){
       it('delegates to the inner map', function(done){
         var mapper = function(){};
         var id = Identity(1);
+
         id[FL.map] = function(f){
           expect(f).to.equal(mapper);
           expect(this).to.equal(id);
           done();
         };
+
         var cid = ConcurrentIdentity(id);
         cid[FL.map](mapper);
       });

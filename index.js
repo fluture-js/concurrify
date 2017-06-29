@@ -19,7 +19,6 @@
   var $of = 'fantasy-land/of';
   var $zero = 'fantasy-land/zero';
   var $$type = '@@type';
-
   var ordinal = ['first', 'second', 'third', 'fourth', 'fifth'];
 
   function isFunction(f){
@@ -74,7 +73,6 @@
 
     var INNERTYPE = getTypeIdentifier(Repr);
     var OUTERTYPE = generateTypeIdentifier(INNERTYPE);
-
     var INNERNAME = type.parse(INNERTYPE).name;
     var OUTERNAME = type.parse(OUTERTYPE).name;
 
@@ -111,6 +109,7 @@
     construct[$$type] = OUTERTYPE;
 
     var mzero = new Concurrently(zero);
+
     construct[$zero] = function Concurrently$zero(){
       return mzero;
     };
