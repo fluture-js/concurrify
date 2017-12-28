@@ -1,6 +1,6 @@
 {
   "name": "concurrify",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Turn non-concurrent FantasyLand Applicatives concurrent",
   "main": "index.js",
   "repository": "https://github.com/fluture-js/concurrify.git",
