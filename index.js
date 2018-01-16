@@ -1,15 +1,15 @@
-(function(global, f){
+(function(f){
 
   'use strict';
 
   /*istanbul ignore next*/
-  if(module && typeof module.exports !== 'undefined'){
+  if(typeof module === 'object' && typeof module.exports === 'object'){
     module.exports = f(require('sanctuary-type-classes'), require('sanctuary-type-identifiers'));
   }else{
-    global.concurrify = f(global.sanctuaryTypeClasses, global.sanctuaryTypeIdentifiers);
+    self.concurrify = f(self.sanctuaryTypeClasses, self.sanctuaryTypeIdentifiers);
   }
 
-}(/*istanbul ignore next*/(global || window || this), function(Z, type){
+}(function(Z, type){
 
   'use strict';
 
