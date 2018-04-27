@@ -6,4 +6,5 @@ node_js:
   - "6"
   - "7"
   - "8"
+  - "10"
 after_success: npm run test:coverage
