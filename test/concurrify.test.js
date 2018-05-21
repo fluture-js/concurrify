@@ -1,10 +1,12 @@
 'use strict';
 
-var concurrify = require ('../');
 var expect = require ('chai').expect;
+var FL = require ('fantasy-land');
+var show = require ('sanctuary-show');
 var Z = require ('sanctuary-type-classes');
 var type = require ('sanctuary-type-identifiers');
-var FL = require ('fantasy-land');
+var concurrify = require ('../');
+
 var $$type = '@@type';
 
 function Identity(x) {
@@ -231,6 +233,17 @@ describe ('concurrify', function() {
 
     });
 
+    describe ('#@@show', function() {
+
+      var inner = Z.of (Identity, 1);
+      var m = ConcurrentIdentity (inner);
+
+      it ('returns a string representation of the data-structure', function() {
+        expect (show (m)).to.equal ('ConcurrentIdentity(' + show (inner) + ')');
+      });
+
+    });
+
     describe ('#toString', function() {
 
       var inner = Z.of (Identity, 1);
@@ -244,7 +257,7 @@ describe ('concurrify', function() {
       });
 
       it ('returns a string representation of the data-structure', function() {
-        expect (m.toString ()).to.equal ('ConcurrentIdentity(' + Z.toString (inner) + ')');
+        expect (m.toString ()).to.equal (show (m));
       });
 
     });
