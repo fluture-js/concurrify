@@ -49,7 +49,7 @@
     "eslint-config-warp": "^2.1.0",
     "fantasy-land": "^3.4.0",
     "mocha": "^5.0.0",
-    "nyc": "^11.4.1",
+    "nyc": "^12.0.1",
     "rimraf": "^2.6.2",
     "xyz": "^3.0.0"
   }
