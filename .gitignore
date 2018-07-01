@@ -1,7 +1,2 @@
-.nyc_output/
-coverage/
-node_modules/
-
-*.log
-
-coverage.lcov
+/coverage/
+/node_modules/
