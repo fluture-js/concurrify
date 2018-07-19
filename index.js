@@ -45,6 +45,8 @@
 //.   (`of`, `zero`, `map`, `ap`, `alt`).
 //. * Instances can be identified by, and are compared using,
 //.   [Sanctuary Type Identifiers][STI].
+//. * Instances can be converted to String representations according to
+//.   [Sanctuary Show][SS].
 //.
 //. ## API
 (function(f) {
@@ -54,17 +56,19 @@
   /* istanbul ignore next */
   if (typeof module === 'object' && typeof module.exports === 'object') {
     module.exports = f (
+      require ('sanctuary-show'),
       require ('sanctuary-type-classes'),
       require ('sanctuary-type-identifiers')
     );
   } else {
     self.concurrify = f (
+      self.sanctuaryShow,
       self.sanctuaryTypeClasses,
       self.sanctuaryTypeIdentifiers
     );
   }
 
-} (function(Z, type) {
+} (function(show, Z, type) {
 
   'use strict';
 
@@ -74,6 +78,7 @@
   var $of = 'fantasy-land/of';
   var $zero = 'fantasy-land/zero';
   var $$type = '@@type';
+  var $$show = '@@show';
   var ordinal = ['first', 'second', 'third', 'fourth', 'fifth'];
 
   //       isFunction :: Any -> Boolean
@@ -104,18 +109,18 @@
       + ' argument to '
       + expected
       + '\n  Actual: '
-      + Z.toString (actual)
+      + show (actual)
     );
   }
 
   //       invalidContext :: (String, String, String) -> !Undefined
   function invalidContext(it, actual, an) {
     throw new TypeError (
-      it +
-      ' was invoked outside the context of a ' +
-      an +
-      '. \n  Called on: ' +
-      Z.toString (actual)
+      it
+      + ' was invoked outside the context of a '
+      + an
+      + '. \n  Called on: '
+      + show (actual)
     );
   }
 
@@ -244,11 +249,15 @@
       return new Concurrently (alt (this.sequential, m.sequential));
     };
 
+    proto[$$show] = function Concurrently$show() {
+      return OUTERNAME + '(' + show (this.sequential) + ')';
+    };
+
     proto.toString = function Concurrently$toString() {
       if (!isOuter (this)) {
         invalidContext (OUTERNAME + '#toString', this, OUTERNAME);
       }
-      return OUTERNAME + '(' + Z.toString (this.sequential) + ')';
+      return this[$$show] ();
     };
 
     return construct;
@@ -261,3 +270,4 @@
 //. [FL:Monad]: https://github.com/fantasyland/fantasy-land/#monad
 //. [FL:Alternative]: https://github.com/fantasyland/fantasy-land/#alternative
 //. [STI]: https://github.com/sanctuary-js/sanctuary-type-identifiers
+//. [SS]: https://github.com/sanctuary-js/sanctuary-show
