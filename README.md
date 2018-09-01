@@ -50,7 +50,7 @@ seq.fork (console.error, console.log);
 
 ## API
 
-#### <a name="concurrify" href="https://github.com/fluture-js/concurrify/blob/v1.1.0/index.js#L140">`concurrify :: (Applicative f, Alternative (m f)) => (TypeRep f, f a, (f a, f a) -⁠> f a, (f a, f (a -⁠> b)) -⁠> f b) -⁠> f c -⁠> m f c`</a>
+#### <a name="concurrify" href="https://github.com/fluture-js/concurrify/blob/v1.1.1/index.js#L135">`concurrify :: (Applicative f, Alternative (m f)) => (TypeRep f, f a, (f a, f a) -⁠> f a, (f a, f (a -⁠> b)) -⁠> f b) -⁠> f c -⁠> m f c`</a>
 
 [FL3]: https://github.com/fantasyland/fantasy-land/
 [FL:Monad]: https://github.com/fantasyland/fantasy-land/#monad
