@@ -57,18 +57,16 @@
   if (typeof module === 'object' && typeof module.exports === 'object') {
     module.exports = f (
       require ('sanctuary-show'),
-      require ('sanctuary-type-classes'),
       require ('sanctuary-type-identifiers')
     );
   } else {
     self.concurrify = f (
       self.sanctuaryShow,
-      self.sanctuaryTypeClasses,
       self.sanctuaryTypeIdentifiers
     );
   }
 
-} (function(show, Z, type) {
+} (function(show, type) {
 
   'use strict';
 
@@ -93,11 +91,8 @@
 
   //       isApplicativeRepr :: TypeRepr -> Boolean
   function isApplicativeRepr(Repr) {
-    try {
-      return Z.Applicative.test (Z.of (Repr));
-    } catch (_) {
-      return false;
-    }
+    return typeof Repr[$of] === 'function' &&
+           typeof Repr[$of] ()[$ap] === 'function';
   }
 
   //       invalidArgument :: (String, Number, String, String) -> !Undefined
@@ -210,7 +205,7 @@
     };
 
     construct[$of] = function Concurrently$of(value) {
-      return new Concurrently (Z.of (Repr, value));
+      return new Concurrently (Repr[$of] (value));
     };
 
     proto[$map] = function Concurrently$map(mapper) {
@@ -222,7 +217,7 @@
         invalidArgument (OUTERNAME + '#map', 0, 'be a function', mapper);
       }
 
-      return new Concurrently (Z.map (mapper, this.sequential));
+      return new Concurrently (this.sequential[$map] (mapper));
     };
 
     proto[$ap] = function Concurrently$ap(m) {
