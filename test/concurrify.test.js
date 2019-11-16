@@ -11,13 +11,13 @@ var $$type = '@@type';
 
 function Identity(x) {
   var id = {x: x, constructor: Identity};
+  id[$$type] = 'my/Identity@1';
   id[FL.ap] = function(mf) { return Identity (mf.x (x)); };
   id[FL.map] = function(f) { return Identity (f (x)); };
   return id;
 }
 
 Identity[FL.of] = Identity;
-Identity[$$type] = 'my/Identity@1';
 
 var mockZero = Identity ('zero');
 
@@ -95,7 +95,7 @@ describe ('concurrify', function() {
       expect (actual).to.be.an.instanceof (ConcurrentIdentity);
     });
 
-    it ('reports being a ConcurrentIdentity from the same vendor and vendor', function() {
+    it ('reports being a ConcurrentIdentity from the same vendor', function() {
       var m = ConcurrentIdentity (Z.of (Identity, 1));
       expect (type (m)).to.equal ('my/ConcurrentIdentity@1');
     });

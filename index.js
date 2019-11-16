@@ -121,7 +121,11 @@
 
   //       getTypeIdentifier :: TypeRepresentative -> String
   function getTypeIdentifier(Repr) {
-    return Repr[$$type] || Repr.name || 'Anonymous';
+    return (typeof Repr.prototype === 'object' ?
+            Repr.prototype[$$type] :
+            Repr[$$type]) ||
+           Repr.name ||
+           'Anonymous';
   }
 
   //       generateTypeIdentifier :: String -> String
@@ -196,6 +200,7 @@
     Concurrently.prototype =
     construct.prototype = {constructor: construct};
 
+    proto[$$type] = OUTERTYPE;
     construct[$$type] = OUTERTYPE;
 
     var mzero = new Concurrently (zero);
