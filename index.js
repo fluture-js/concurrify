@@ -196,6 +196,7 @@
     Concurrently.prototype =
     construct.prototype = {constructor: construct};
 
+    proto[$$type] = OUTERTYPE;
     construct[$$type] = OUTERTYPE;
 
     var mzero = new Concurrently (zero);
