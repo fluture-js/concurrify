@@ -1,10 +1,23 @@
 # Concurrify
 
-[![Chat](https://badges.gitter.im/fluture-js/concurrify.svg)](https://gitter.im/fluture-js/fluture)
-[![NPM Version](https://badge.fury.io/js/concurrify.svg)](https://www.npmjs.com/package/concurrify)
-[![Dependencies](https://david-dm.org/fluture-js/concurrify.svg)](https://david-dm.org/fluture-js/concurrify)
-[![Build Status](https://travis-ci.org/fluture-js/concurrify.svg?branch=master)](https://travis-ci.org/fluture-js/concurrify)
-[![Code Coverage](https://codecov.io/gh/fluture-js/concurrify/branch/master/graph/badge.svg)](https://codecov.io/gh/fluture-js/concurrify)
+## :warning: Unmaintained
+
+This library is no longer used by Fluture ([`7b6d9fd`][]), and now fills a
+space I don't think is worth filling.
+
+1. It's overly opinionated as a result of having been part of Fluture.
+2. It does more than strictly necessary (inclusion of Alternative instance).
+3. It doesn't do any real work - it just takes all the needed functions as
+   input and wires them up for Fantasy Land compliance. As such, it's not
+   a lot of effort for users to do the wiring themselves.
+4. It used undocumented features from [Sanctuary Type Identifiers][STI] to
+   automatically generate new type identifiers, but these are no longer
+   available in the latest version of Sanctuary Type Identifiers.
+
+[`7b6d9fd`]: https://github.com/fluture-js/Fluture/commit/7b6d9fdc4ebbc4c6c2485cb5a8d1b2da1eb39fe4
+----
+
+## Introduction
 
 Turn non-concurrent [FantasyLand 3][FL3] Applicatives concurrent.
 
